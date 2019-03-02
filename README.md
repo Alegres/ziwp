@@ -26,8 +26,8 @@ Użytkownik, za pośrednictwem interfejsu graficznego może
 
 Użytkownik otrzyma dostęp do tych możliwości dopiero po *rejestracji* oraz *logowaniu*. Wówczas zostanie stworzona dla niego prywatna przestrzeń robocza, za pośrednictwem której będzie mógł zarządać swoimi uprawami.
 
-Każda nowa uprawa wymagać będzie zainstalowania Arduino oraz *modułu Arduino* w fizycznej lokalizacji uprawy oraz dostosowania go do współpracy z serwerem centralnym
-* konfiguracja sieci - przeprowadzana niezależnie
+Każda nowa uprawa wymagać będzie zainstalowania Arduino oraz *modułu Arduino* w fizycznej lokalizacji uprawy oraz dostosowania go do współpracy z serwerem
+* konfiguracja sieci
 * uruchomienie modułów, konfiguracja (adresy IP, hasła, kluczowe parametry)
 
 ## Wymagania niefunkcjonalne
