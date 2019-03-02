@@ -74,3 +74,16 @@ Wady
 * odpowiednia infrastruktura sieciowa oraz sprzęt muszą zostać zapewnione *na miejscu* (uprawie)
 * powołana musi zostać dodatkowa jednostka techniczna (administracyjna) odpowiedzialna za każdą uprawę
 * trudniejszy proces instalacji oraz konfiguracji
+
+### Technologie
+* Pyhton, Django
+* Vue.js, HTML, CSS
+* Repozytorium Git
+* Trello
+* Baza danych - relacyjna vs NoSql ?
+
+Motywacje
+* dobra dokumentacja
+* rozwinięta społeczność = szybka pomoc
+* frameworki = konkretne wymagania dot. struktury projektu, prowadzenia kodu = łatwiejsza rozbudowa w przyszłości, łatwiejsza współpraca
+* Python = dobra współpraca z Arduino
