@@ -56,6 +56,7 @@ Zalety
 * uprawy nie są odpowiedzialne za serwer, bazę danych ani interfejs WWW - jest on zapewniany centralnie
 * mniejsze ryzyko błędnej konfiguracji
 * łatwiejsze powołanie systemu do życia
+
 Wady
 * zapewnienie zasobów pamięciowych oraz mocy obliczeniowej do obsługi wszystkich upraw leży po stronie centralnej administracji
 * na wypadek awarii jednostki centralnej, wszystkie uprawy przestają działać
@@ -63,5 +64,13 @@ Wady
 ![alt text](https://github.com/Alegres/ziwp/blob/master/centralized.jpg "Model zcentralizowany")
 
 ### Model "samowystraczalny"
+Model *samowystarczalny* to pod względem schematu po prostu *Podejście ogólne*, powielone na każdą uprawę. W takim modelu każda uprawa posiada własny serwer, bazę danych oraz interfejs.
 
+Zalety
+* awaria jednej uprawy nie wpływa na pozostałe
+* elastyczne rozdzielenie zasobów pamięciowych oraz mocy obliczeniowej - mniejsza ilość danych (dane dotyczące tylko konkretnej uprawy)
 
+Wady
+* odpowiednia infrastruktura sieciowa oraz sprzęt muszą zostać zapewnione *na miejscu* (uprawie)
+* powołana musi zostać dodatkowa jednostka techniczna (administracyjna) odpowiedzialna za każdą uprawę
+* trudniejszy proces instalacji oraz konfiguracji
