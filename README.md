@@ -52,6 +52,15 @@ Każda nowa uprawa wymagać będzie zainstalowania Arduino oraz *modułu Arduino
 ![alt text](https://github.com/Alegres/ziwp/blob/master/architecture.jpg "Architektura systemu")
 
 ### Model z centralnym serwerem
+Zalety
+* uprawy nie są odpowiedzialne za serwer, bazę danych ani interfejs WWW - jest on zapewniany centralnie
+* mniejsze ryzyko błędnej konfiguracji
+* łatwiejsze powołanie systemu do życia
+Wady
+* zapewnienie zasobów pamięciowych oraz mocy obliczeniowej do obsługi wszystkich upraw leży po stronie centralnej administracji
+* na wypadek awarii jednostki centralnej, wszystkie uprawy przestają działać
+
+![alt text](https://github.com/Alegres/ziwp/blob/master/centralized.jpg "Model zcentralizowany")
 
 ### Model "samowystraczalny"
 
