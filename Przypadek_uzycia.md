@@ -56,18 +56,18 @@ Użytkownik wprowadza tajny klucz uprawy, do pliku konfiguracyjnego:
 plantSecretKey: '2aj582@91i@89c_1'
 ```
 
-# 6. Podłączenie płytyki Arduino oraz schemat komunikacji
-Płytka zostaje podłączona do modułu Arduino - w celach testowych przyjmijmy, że za pośrednictwem klasycznego łącza szeregowego. Wykorzystanie zostanie przykładowo moduł *PySerial* (pozwala on na obsługę szeregowego połączenia przy pomocy *Pythona*).
-
+# 6. Bardziej szczegółowy schemt komunikacji
 ![alt text](https://github.com/Alegres/ziwp/blob/master/communication.jpg?raw=true "Communication")
 
-# 7. Inicjalizacja modułu Arduino
+# 7. Podłączenie płytyki Arduino
+Płytka zostaje podłączona do modułu Arduino - w celach testowych przyjmijmy, że za pośrednictwem klasycznego łącza szeregowego (otwarte gniazdo, Arduino działa w pętli). Wykorzystanie zostanie przykładowo moduł *PySerial* (pozwala on na obsługę szeregowego połączenia przy pomocy *Pythona*).
+
+# 8. Inicjalizacja modułu Arduino
 Na początku moduł wysyła do serwera komunikat **READY**, zawierający tajny kod uprawy. Serwer w ramach odpowiedzi zwraca do modułu parametry, które powinny być przestrzegane na plantacji. Moduł zapisuje te parametry w swojej pamięci.
-![alt text](https://github.com/Alegres/ziwp/blob/master/module_server_connection.jpg?raw=true "Module-Server connection")
 
 Od tego momentu rozpoczyna się praca modułu Arduino (w nieskończonej pętli).
 
-# 8. Praca Moduł Arudino - Serwer
+# 9. Praca Moduł Arudino - Serwer
 Moduł zwraca się do serwera (w nieskończonej pętli) sprawdzając czy:
 * zmieniły się ustalone parametry plantacji (min. czas co jaki serwer oczekuje od modułu pomiarów)
 * powinien dodać do listy swoich czynności uruchamianie spryskiwacza codziennie o X godzinie
@@ -94,7 +94,7 @@ Oczywiście jeśli uprawa o takim tajnym kodzie nie istnieje w bazie danych, ser
 **UWAGA:** Serwer jedynie zwraca odpowiedzi, ale sam **nie zwraca się do modułu Arduino z prośbą o cokolwiek**.
 **UWAGA 2:** Moduł arduino może realizować funkcję alarmowania. Wówczas wstępnie analizował by pomiary, które otrzymuje z płytki i porówynywał ze wskaźnikami (presetem) obowiązującym na uprawie. Jeżeli coś by się nie zgadzało, zgłaszałby to serwerowi, który następnie wysyłał by wiadomość do właściciela plantacji (np. na adres mailowy). [alarmowanie_1]
 
-# 8. Praca Klient - Serwer - Moduł arduino
+# 10.. Praca Klient - Serwer - Moduł arduino
 Klient po inicjalizacji (otworzeniu strony przez użytkownika i zalogowaniu się do systemu) pobiera z serwera podstawowe dane:
 * dostępne uprawy
 * dostępne presety
@@ -125,7 +125,7 @@ Gdybyśmy chcieli dodatkowo realizować alarmowanie po stronie klienta, to musia
 **[alarmowanie_2]:**
 Klient posiada uruchomioną pętlę, odpalaną co **czas X** (dla konkretnej uprawy) + **kilka dodatkowych sekund**. W momencie uruchomienia pętli, pobiera od serwera parametry panujące na plantacji i reaguje (np. wysyła alarm).
 
-# 9. [alarmowanie_1] vs [alarmowanie_2]
+# 11. [alarmowanie_1] vs [alarmowanie_2]
 Pierwszy sposób wydaje się mieć przewagę nad drugim, ponieważ umożliwia rozdzielenie głównych funkcji poszczególnych modułów:
 * moduł Arduino pobiera pomiary z płytki oraz alarmuje użytkownika (pierwsza linia ognia)
 * klient umożliwia użytkownikowi przeglądanie stanu plantacji (spokojna głowa), dostęp do historii (kontrola), określania parametrów plantacji (po raz kolejny kontrola) oraz przeglądania statystyk (wiedza)
