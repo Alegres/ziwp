@@ -56,10 +56,10 @@ Użytkownik wprowadza tajny klucz uprawy, do pliku konfiguracyjnego:
 plantSecretKey: '2aj582@91i@89c_1'
 ```
 
-# 6. Podłączenie płytyki Arduino
+# 6. Podłączenie płytyki Arduino oraz schemat komunikacji
 Płytka zostaje podłączona do modułu Arduino - w celach testowych przyjmijmy, że za pośrednictwem klasycznego łącza szeregowego. Wykorzystanie zostanie przykładowo moduł *PySerial* (pozwala on na obsługę szeregowego połączenia przy pomocy *Pythona*).
 
-![alt text](https://github.com/Alegres/ziwp/blob/master/measurements_ziwg.jpg?raw=true "Measurements through serial")
+![alt text](https://github.com/Alegres/ziwp/blob/master/communication.jpg?raw=true "Communication")
 
 # 7. Inicjalizacja modułu Arduino
 Na początku moduł wysyła do serwera komunikat **READY**, zawierający tajny kod uprawy. Serwer w ramach odpowiedzi zwraca do modułu parametry, które powinny być przestrzegane na plantacji. Moduł zapisuje te parametry w swojej pamięci.
