@@ -89,8 +89,6 @@ POST:
 ```
 Oczywiście jeśli uprawa o takim tajnym kodzie nie istnieje w bazie danych, serwer powinien odrzucić taki pomiar (a nawet zablokować zapytania od danego adresu IP [bezpieczeństwo]). Po otrzymaniu pomiarów od prawidłowej uprawy, serwer zapisuje je w bazie danych (oczywiście referują one do konkretnej uprawy znanej dzięki tajnemu kodowi).
 
-![alt text](https://github.com/Alegres/ziwp/blob/master/module_server_work_ziwg.jpg?raw=true "Module-Server work")
-
 **UWAGA:** Serwer jedynie zwraca odpowiedzi, ale sam **nie zwraca się do modułu Arduino z prośbą o cokolwiek**.
 **UWAGA 2:** Moduł arduino może realizować funkcję alarmowania. Wówczas wstępnie analizował by pomiary, które otrzymuje z płytki i porówynywał ze wskaźnikami (presetem) obowiązującym na uprawie. Jeżeli coś by się nie zgadzało, zgłaszałby to serwerowi, który następnie wysyłał by wiadomość do właściciela plantacji (np. na adres mailowy). [alarmowanie_1]
 
