@@ -13,25 +13,56 @@
 
 ## Podstawowe rozwiązania
 ### Axios
-dasdsa
+Axios pozwala w bardzo prosty sposób tworzyć zapytania do API (serwera)
+```
+const axios = require('axios');
+
+// Make a request for a user with a given ID
+axios.get('/user?ID=12345')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+```
+
+W celu umożliwienia łatwej zmiany biblioteki, stworzone zostaną specjalne *service*, wykorzystywane przez klienta do komunikacji z serwerem. Dzięki temu ewentualna zmiana biblioteki służącej do komunikacji z serwerem będzie łatwa - wystarczy wprowadzić nową implementację serwisu.
 
 ### Vuex
-das
+*Vuex* jest rozszerzeniem *Vue.js*, funkcjonującym jako centralny magazyn gromadzący dane, z których następnie (w kontrolowany sposób) mogą korzystać wszystkie komponenty widoku.
+
+![alt text](https://raw.githubusercontent.com/vuejs/vuex/dev/docs/.vuepress/public/vuex.png "Vuex")
+
+Jest to bardzo przydatne rozszerzenie, zwłaszcza biorąc pod uwagę to, że klient pobierał będzie od serwera dane, wykorzystywane następnie w wielu miejscach. Klient będzie również zmieniał te dane. W związku z tym nie tylko serwer będzie musiał zostać powiadomiony o zmianie, ale i każdy komponent widoku. Dzięki Vuex utrzymanie spójności jest bardzo proste.
+
 
 ### i18n
-dasdas
+Rozszerzenie umożliwiające wprowadzenie wielu wersji językowych.
 
 ### Bootstrap
-adasdasdasdsa
-
-### SCSS
-dasdasdsa
+*Bootstrap* jest frameworkiem, który pozwala na tworzenie eleganckich, responsywnych widoków, przy użyciu *HTML oraz CSS*. Posiada szereg zdefiniowanych klas, dzięki czemu tworzenie widoku jest szybkie.
 
 ### Autoryzacja przy pomocy tokena JWT
-dasdsadas
+Jako że w komunikacji *klient-serwer* stawiamy na podejście *REST*, **token JWT** będzie idealnie pasował do naszego systemu. Klient, w momencie logowania, otrzyma od serwera specjalny token, w którym zakodowana jest tożsamość logującego się użytkownika. Serwer, dzięki mechanizmom wewnętrznym, potrafi ocenić prawdziwość tokena oraz pobrać z niego obiekt użytkownika, który się nim posługuje. Dzięki temu zabezpieczone zostaną zasoby, do których dostęp powinien mieć tylko zalogowany użytkownik oraz zwrócone zostaną tylko i wyłącznie zasoby należącego do konkretnego użytkownika.
 
 ## Struktura implementacji
-cdsadsa
+![alt text](https://github.com/Alegres/ziwp/blob/master/client_structure.png?raw=true "Client structure")
+
+* assets - statyczne pliki *.js*, *.css* oraz obrazki
+* components - komponenty budujące stronę (np. wyszukiwarka, przełącznik wersji językowej)
+* constants - pliki zawierające zmienne stałe (pliki konfiguracyjne)
+* lang - pliki z wersjami językowymi
+* pages - konkretne fragmenty systemu (komponenty) posiadające kluczową biznesową rolę
+* plugins - pliki stanowiące interfejs do wykorzystywanych w systemie pluginów (*Toast* - elegancka obsługa błędów, *i18n* - wsparcie dla wielu wersji językowych, etc.)
+* router - pliki odpowiedzialne za obsługę *routingu* w systemie (gdzie skierować użytkownika, gdy wejdzie pod dany adres)
+* services - serwisy wykorzystywane przez system do komunikacji z serwerem oraz do innych zadań (weryfikacja adresu email, hasła, etc.)
+* store - pliki definiujące magazyn *Vuex*
 
 ## Projekt interfejsu
-picadoo
+Poniżej przedstawiony został projekt interfejsu.
