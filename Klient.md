@@ -12,6 +12,9 @@
 * (możliwa obsługa wielu języków)
 
 ## Podstawowe rozwiązania
+### Vue.js
+Wybrany został framework *Vue.js* pozwalający tworzyć dynamiczne strony WWW przy wykorzystaniu *javascript*. Vue jest bardzo dobrze udokumentowany oraz zawiera szereg pomocnych bibliotek. Pozwala w bardzo prosty sposób podzielić widok na mniejsze komponenty, które następnie mogą być używane w wielu miejscach systemu. Ponadto praca nad mniejszymi fragmentami zawsze jest prostsza.
+
 ### Axios
 Axios pozwala w bardzo prosty sposób tworzyć zapytania do API (serwera)
 ```
@@ -65,4 +68,51 @@ Jako że w komunikacji *klient-serwer* stawiamy na podejście *REST*, **token JW
 * store - pliki definiujące magazyn *Vuex*
 
 ## Projekt interfejsu
-Poniżej przedstawiony został projekt interfejsu.
+Poniżej przedstawiony został projekt interfejsu (wraz z zaznaczonymi komponentami odpowiedzialnymi za daną część).
+
+![alt text](https://github.com/Alegres/ziwp/blob/master/interface_1.jpg?raw=true "Interface 1")
+
+* #APP - główny komponent, *wrapper* dla całej aplikacji
+* #NAVBAR - górne menu, zawiera informacje o aktualnie zalogowanym użytkowniku oraz akcje związane stricte z jego kontem (wyloguj się, przejdź do ustawień); wykorzystanie dwóch ikon (**mini_user.ico** oraz **settings.ico**)
+* #SIDEBAR - menu boczne, może być rozwijane (**toggle on / off**), dzięki czemu w wersji mobilnej użytkownik będzie miał wciąż dużą ilość miejsca na środku ekranu. Zawiera odnośniki do najważniejszych (pod względem realizacji założeń biznesowych) elementów systemu: zakładanie uprawy, tworzenie presetów, zarządzanie uprawami.
+* #MAINBAR - w ten komponent wstrzykiwane będą kolejne komponenty, odpowiedzialne za realizację kluczowej funkcjonalności systemu (formularze służące do dodawania presetów / upraw, szczegóły konkretnej uprawy, panel zarządzania uprawą, etc.)
+
+## Dodawanie uprawy
+Za pomocą formularza zawartego w komponencie **#CREATE_PLANT** użytkownik będzie mógł dodać do systemu uprawę. W momencie wysłania formularza, do serwera zostanie skierowane zapytanie *POST*, zawierające dane dotyczące nowej uprawy (preset oraz nazwę). Serwer spróbuje stworzyć nową uprawę i zwróci odpowiednią informację do klienta (błąd lub wygenerowany kod uprawy).
+
+![alt text](https://github.com/Alegres/ziwp/blob/master/create_plant.jpg?raw=true "Create plant")
+
+Patrząc głębiej w działanie klienta:
+* state - nic innego, jak faktyczne dane (tablice, stringi, inty)
+* mutations - za pomocą *mutacji* zmieniamy stany (dzięki temu dostęp do stanów jest kontrolowany). Wszystkie zmiany stanów **muszą** przechodzić przez mutacje
+* actions - są asynchroniczne, wyzwalają mutacje (*commitują* je). Wewnątrz akcji możemy np. wysyłać zapytania do serwera - w naszym przypadku korzystając z odpowiednich serwisów.
+
+**Przykład:**
+```
+    login({ dispatch, commit }, { username, password }) {
+        commit('loginRequest', { username });
+    
+        UserService.login(username, password)
+            .then(
+                user => {
+                    commit('loginSuccess', user);
+                    router.push('/');
+                },
+                error => {
+                    commit('loginFailure', error);
+                    dispatch('alert/error', UserMessagesService.getMessageAfterLogin(error.response), { root: true });
+                }
+            );
+    }
+```
+Akcja *login* jako argument przyjmuje *username* oraz *password*. Na początku wykonuje ona *commit*, wywołujący mutację:
+```
+    loginRequest(state, user) {
+        state.status = { loggingIn: true };
+        state.user = user;
+    }
+```
+Powyższa mutacja zmienia *state* ustawiając użytkownika na tego, który próbuje się zalogować oraz parametr *loggingIn* na *true* (dzięki temu wiemy, że aktualnie loguje się jakiś użytkownik).
+
+Przepływ jest więc następujący:
+* AKCJA -> MUTACJA -> ZMIANA STANU
