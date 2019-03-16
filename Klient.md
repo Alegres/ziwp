@@ -118,3 +118,9 @@ Przepływ jest więc następujący:
 * AKCJA -> MUTACJA -> ZMIANA STANU
 
 ![alt text](https://github.com/Alegres/ziwp/blob/master/vuex.jpg?raw=true "Vuex")
+
+## Dodawanie presetu
+
+## Zarządzanie uprawą
+
+## Ustawienia konta
