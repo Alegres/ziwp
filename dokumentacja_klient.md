@@ -119,8 +119,55 @@ Przepływ jest więc następujący:
 
 ![alt text](https://github.com/Alegres/ziwp/blob/master/vuex.jpg?raw=true "Vuex")
 
-## Dodawanie presetu
+## Implementacja
+Poniżej przedstawione zostały efekty implementacyjne.
 
-## Zarządzanie uprawą
+### Tworzenie plantacji
+![](https://github.com/Alegres/ziwp/blob/master/impl/imp_create.png?raw=true)
 
-## Ustawienia konta
+### Zarządzanie plantacją
+![](https://github.com/Alegres/ziwp/blob/master/impl/impl_manage.png?raw=true)
+
+### Analiza pomiarów
+![](https://github.com/Alegres/ziwp/blob/master/impl/impl_measurements.png?raw=true)
+
+### Tworzenie presetu
+![](https://github.com/Alegres/ziwp/blob/master/impl/impl_preset.png?raw=true)
+
+### Ustawienia użytkownika
+![](https://github.com/Alegres/ziwp/blob/master/impl/impl_settings.png?raw=true)
+
+### Obsługa komunikatów
+![](https://github.com/Alegres/ziwp/blob/master/impl/impl_success.png?raw=true)
+
+![](https://github.com/Alegres/ziwp/blob/master/impl/impl_error.png?raw=true)
+
+## Instalacja 
+Instalacja klienta WWW polega na pobraniu aktualnego kodu aplikacji z repozytorium Git: \textit{https://github.com/Alegres/ziwg-client.git}. Dostęp do repozyterium musi zostać najpierw przyznany (repozytorium nie jest publiczne, w razie pytań: damian.cywinsky@gmail.com).
+
+Na maszynie zainstalowane musi zostać środowisko uruchomieniowe **Node**, w celu możliwości korzystania z \textit{NPM} (zarządzanie pakietami, uruchamianie buildu). Następnie możliwe jest przygotowanie klienta do działania:
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run all tests
+npm test
+
+# sync down lokalise translation strings. You need to create acc and generate token. Not available for free plan.
+npm run lokalise:down
+```
+
+W pliku konfiuracyjnym należy również ustawić adres IP serwera - w przeciwnym wypadku moduł nie będzie w stanie komunikować się z serwerem.
