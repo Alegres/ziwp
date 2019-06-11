@@ -143,9 +143,9 @@ Poniżej przedstawione zostały efekty implementacyjne.
 ![](https://github.com/Alegres/ziwp/blob/master/impl/impl_error.png?raw=true)
 
 ## Instalacja 
-Instalacja klienta WWW polega na pobraniu aktualnego kodu aplikacji z repozytorium Git: \textit{https://github.com/Alegres/ziwg-client.git}. Dostęp do repozyterium musi zostać najpierw przyznany (repozytorium nie jest publiczne, w razie pytań: damian.cywinsky@gmail.com).
+Instalacja klienta WWW polega na pobraniu aktualnego kodu aplikacji z repozytorium Git: *https://github.com/Alegres/ziwg-client.git*. Dostęp do repozyterium musi zostać najpierw przyznany (repozytorium nie jest publiczne, w razie pytań: damian.cywinsky@gmail.com).
 
-Na maszynie zainstalowane musi zostać środowisko uruchomieniowe **Node**, w celu możliwości korzystania z \textit{NPM} (zarządzanie pakietami, uruchamianie buildu). Następnie możliwe jest przygotowanie klienta do działania:
+Na maszynie zainstalowane musi zostać środowisko uruchomieniowe **Node**, w celu możliwości korzystania z **NPM** (zarządzanie pakietami, uruchamianie buildu). Następnie możliwe jest przygotowanie klienta do działania:
 
 ``` bash
 # install dependencies
