@@ -539,4 +539,4 @@ npm test
 npm run lokalise:down
 ```
 
-W pliku konfiuracyjnym należy również ustawić adres IP serwera - w przeciwnym wypadku moduł nie będzie w stanie komunikować się z serwerem.
+W poszczególnych serwisach należy również ustawić adresy URL endpointów serwera - w przeciwnym wypadku moduł nie będzie w stanie komunikować się z serwerem.
