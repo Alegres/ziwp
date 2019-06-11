@@ -17,7 +17,8 @@ Kluczowym zadaniem systemu będzie więc pomoc w dbaniu o dwa bardzo istotne czy
 Dzięki temu zaoszczędzone zasoby mogą zostać przeniesione na nowe uprawy, bez konieczności martwienia się o spadek ogólnej jakości.
 
 ## Wymagania funkcjonalne
-Użytkownik, za pośrednictwem interfejsu graficznego może
+Użytkownik, za pośrednictwem interfejsu graficznego może:
+
 * dodawać / usuwać uprawy
 * zmieniać nazwę oraz kolor znaczący uprawy (kolor pomoże mu odróżnić wizualnie jedną uprawę od drugiej)
 * przeglądać historię zmian kluczowych dla uprawy parametrów (wilgotność powietrza, nawodnienie gleby, temperatura) w czasie
