@@ -41,6 +41,8 @@ Ostatecznie poniesione zostały następujące koszta:
 5$ + 285,5zł =~ 300 zł
 ```
 
+**Serwer:**
+
 * Opłacenie publicznego serwera testowego, dzięki któremu mogliśmy testować współdziałanie wszystkich modułów: **5$**
 
 **Arduino:**
