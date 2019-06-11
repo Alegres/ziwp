@@ -56,6 +56,4 @@ Ostatecznie poniesione zostały następujące koszta:
 * przewód sieciowy	15 zł
 * drobna elektronika	10 zł
 
-**SUMA:** 285,5 zł
-
 
