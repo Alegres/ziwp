@@ -37,6 +37,25 @@ Aktualnie aplikację można traktować jako solidną bazę, nadającą się do d
 
 # Ostateczny kosztorys
 Ostatecznie poniesione zostały następujące koszta:
+```
+5$ + 285,5zł =~ 300 zł
+```
 
 * Opłacenie publicznego serwera testowego, dzięki któremu mogliśmy testować współdziałanie wszystkich modułów: **5$**
-* Komponenty Arduino: 
+
+**Arduino:**
+
+* Arduino UNO	92 zł
+* Powłoka Ethernet	47 zł
+* DHT22	30 zł
+* czujnik wilgotności gleby	6 zł
+* przekaźnik	8 zł
+* zasilacz	25 zł
+* pompa	40 zł
+* switch	12,5 zł
+* przewód sieciowy	15 zł
+* drobna elektronika	10 zł
+
+**SUMA:** 285,5 zł
+
+
