@@ -119,7 +119,376 @@ Przepływ jest więc następujący:
 
 ![alt text](https://github.com/Alegres/ziwp/blob/master/vuex.jpg?raw=true "Vuex")
 
-## Implementacja
+## Pliki językowe
+Pliki językowe, w formacie *.json*, przechowywane są w katalogu **lang**. Fragment przykładowego pliku:
+```
+{
+  "app_title": "Plants",
+  "app_description": "Here, you will be able to remotely manage your plants. Create an account and login to the system!",
+  "welcome_message": "Welcome to Your Vue.js App",
+  "popular_links": "Popular Links",
+  "ecosystem": "Ecosystem",
+  "not_found": "Page not found",
+  "not_found_explanation": "We are sorry, but the page you were looking for does not exist.",
+  "loading": "Loading...",
+  "pages": {
+    "presets": {
+      "create_form_send": "Add preset",
+      "create_preset": "Create a new preset",
+      "presets": "Presets",
+      "no_presets": "Currently there are no presets.",
+      "modify_preset": "Modify the preset",
+      "modify_form_send": "Modify",
+      "preset_name": "Name of the preset",
+      "min_temperature": "Minimal temperature",
+      "max_temperature": "Maximal temperature",
+      "min_humidity": "Minimal humidity",
+      "max_humidity": "Maximal humidity",
+      "min_soil": "Minimal soil",
+      "max_soil": "Maximal soil",
+      "expected_growth": "Expected weekly growth",
+      "preset_color": "Color of the preset",
+      "no_preset": "Preset does not exist.",
+      "how_often_to_water": "How often to water?",
+      "how_long_to_water": "How long to water?"      
+    },
+    
+    (...)
+```
+
+## Nagłówek JWT oraz odnawianie tokena
+Wewnątrz serwisu **authHeader.js** realizowane jest dodawanie do nagłówka rządania tokena JWT oraz odświeżanie tokena, tuż przed jego wygaśnięciem:
+```
+import { UserService } from '@/services/api/user/UserService'
+import { LanguageRouter } from "@/plugins/LanguageRouter";
+
+import {
+    MINUTES_TO_REFRESH_TOKEN
+  } from "@/constants/startup";
+
+export function authHeader() {
+    let user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.token) {
+        let token = user.token;
+
+        let lastTokenRequestDate = new Date(user.last_token_request);
+        let nextTokenRequest = new Date(lastTokenRequestDate.getTime() + MINUTES_TO_REFRESH_TOKEN * 60000);
+        let currentTime = new Date();
+
+        if(currentTime > nextTokenRequest) {
+            UserService.refreshToken(user.token).then(newToken => {
+                token = newToken;
+
+                localStorage.removeItem('user');
+                user.last_token_request = new Date();
+                localStorage.setItem('user', JSON.stringify(user));
+            }, error => {
+                UserService.logout();
+                LanguageRouter.pushToPath('/login');
+            });
+        }
+        return { 'Authorization': 'JWT ' + token };
+    } else {
+        return {};
+    }
+}
+```
+
+Token (a nawet cały zalogowany user), pobierany jest z pamięci lokalnej. Umiejscowiony zostaje tam po prawidłowym zalogowaniu się przez użytkownika, dzięki współpracy *Vuex-Store* oraz serwisu *UserService.js*.
+
+## Przykładowy serwis (PlantService.js)
+```
+import axios from 'axios';
+import Api from '@/services/api/Api'
+import { PresetService } from '@/services/api/preset/PresetService'
+import { authHeader } from '@/helpers/authHeader'
+
+/*
+Auth-Headers: JWT + $token
+*/
+
+const API_URL = 'https://plants.ml/api'
+
+export const PlantService = {
+    create,
+    getAll,
+    getOne,
+    add,
+    remove,
+    update,
+    getMeasurements
+};
+
+function getMeasurements(plantId) {
+    return Api().get(API_URL + '/measurement/' + plantId + '/',
+    {
+        headers: authHeader()
+    })
+    .then(response => {                 
+        return response.data;
+    }); 
+}
+
+function update(plant) {
+    return Api().put(API_URL + '/plant/' + plant.id + '/',
+        plant,
+        {
+            headers: authHeader()
+        })
+        .then(response => {
+            return response.data;
+        });  
+}
+
+function create(plant) {
+    return Api().post(API_URL + '/plant/',
+        plant,
+        {
+            headers: authHeader()
+        })
+        .then(response => {
+            return response.data;
+        });  
+}
+function getAll() {
+   return Api().get(API_URL + '/plant/',
+   {
+       headers: authHeader()
+   })
+   .then(response => {     
+       return response.data;
+   });
+}
+
+function getOne(presetId) {
+
+}
+
+function add(preset) {
+
+}
+
+function remove(plantId) {
+    return Api().delete(API_URL + '/plant/' + plantId + '/',
+        {
+            headers: authHeader()
+        })
+        .then(response => {
+            return response.data;
+        });
+}
+```
+
+## Przykładowy Vuex-store (plantStore.js)
+```
+import { Trans } from '@/plugins/Translation';
+import router from '@/router';
+import { PlantMessagesService } from '@/services/api/plant/PlantMessagesService';
+import { PlantService } from '@/services/api/plant/PlantService';
+
+const state = { status: {}, plants: [], measurements: [], currentPlant: {} }
+
+const getters = {
+    plants: state => state.plants
+}
+
+const actions = {
+    loadMeasurements({ commit, dispatch }, plantId) {
+        commit('getMeasurementsRequest');
+
+        PlantService.getMeasurements(plantId).then(
+            measurements => {
+                commit('getMeasurementsSuccess', measurements);
+            },
+            error => {
+                commit('getMeasurementsError', error);
+                //dispatch('alert/error', PlantMessagesService.getMessageAfterGettingPlants(error.response), { root: true });
+            }
+        );
+    },
+    updatePlant({ commit, dispatch }, newPlant) {
+        return new Promise((resolve, reject) => {
+            commit('updatePlantRequest');
+
+            // API Call to update a plant
+            PlantService.update(newPlant).then(
+                plant => {
+                    commit('updatePlantLocally', newPlant);
+                    resolve(newPlant);
+                },
+                error => {
+                    commit('updatePlantError', error);
+                    dispatch('alert/error', PlantMessagesService.getMessageAfterUpdatingPlantError(error.response), { root: true });
+                    reject();
+                }
+            )
+        });
+    },
+    getPlant({ commit, state }, { plantName }) {
+        let found = false;
+
+        for (var ia = 0; ia < state.plants.length; ia++) {
+            if (state.plants[ia].name == plantName) {
+                commit('setPlant', state.plants[ia]);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+            commit('getPlantRequestError')
+    },
+    getAllPlants({ dispatch, commit }) {
+        commit('getAllPlantsRequest');
+
+        PlantService.getAll().then(
+            plants => {
+                commit('getAllPlantsSuccess', plants);
+            },
+            error => {
+                commit('getAllPlantsError', error);
+                dispatch('alert/error', PlantMessagesService.getMessageAfterGettingPlants(error.response), { root: true });
+            }
+        );
+    },
+    createPlant({ dispatch, commit }, newPlant) {
+        commit('createPlantRequest');
+
+        // API Call to create a plant
+        PlantService.create(newPlant).then(
+            plant => {
+                commit('createPlantSuccess', plant);
+                dispatch('alert/success', PlantMessagesService.getMessageAfterCreatingPlant(), { root: true });
+            },
+            error => {
+                commit('createPlantError', error);
+                dispatch('alert/error', PlantMessagesService.getMessageAfterCreatingPlantError(error.response), { root: true });
+            }
+        )
+    },
+    checkIfPresetInUse({ commit, state }, preset) {
+        return new Promise((resolve, reject) => {
+            for (let ia = 0; ia < state.plants.length; ia++) {
+                if (state.plants[ia].id_preset == preset.id) {
+                    reject(plant)
+                    break;
+                }
+            }
+            resolve();
+        })
+    },
+    deletePlant({ dispatch, commit }, plant) {
+        commit('deletePlantRequest');
+
+        PlantService.remove(plant.id).then(
+            complete => {
+                commit('deletePlantSuccess', plant);
+                dispatch('alert/success', PlantMessagesService.getMessageAfterRemovingPlant(), { root: true });
+            },
+            error => {
+                commit('deletePlantError', error);
+                dispatch('alert/error', PlantMessagesService.getMessageAfterRemovingPlantError(error.response), { root: true });
+            }
+        )
+
+    }
+};
+
+const mutations = {
+    deletePlantRequest(state) {
+        state.status = { removingPlant: true }
+    },
+    deletePlantSuccess(state, plant) {
+        state.status = { removingPlant: false }
+
+        for(let ia = 0; ia < state.plants.length; ia++) {
+            let plantElement = state.plants[ia];
+
+            if(plantElement.id == plant.id) {
+                state.plants.splice(ia, 1)
+                break;
+            }
+        }
+    },
+    deletePlantError(state) {
+        state.status = {};
+    },
+    getMeasurementsRequest(state) {
+        state.status = { gettingMeasurements: true }
+    },
+    getMeasurementsSuccess(state, measurements) {
+        console.log("SUCCESS!")
+        console.log(measurements)
+
+        state.measurements = measurements;
+        console.log("TO FALSE")
+        state.status = { gettingMeasurements: false }
+    },
+    getMeasurementsError(state) {
+        state.measurements = []
+        state.status = {}
+    },
+    updatePlantRequest(state) {
+        state.status = { updatingPlant: true }
+    },
+    updatePlantLocally(state, plant) {
+        state.currentPlant.name = plant.name;
+        state.currentPlant.temperature = plant.temperature;
+        state.currentPlant.color = plant.color;
+        state.currentPlant.id_preset = plant.preset.id;
+
+        console.log("Current plant")
+        console.log(plant.preset)
+        state.currentPlant.preset = plant.preset;
+
+        state.status = { updatingPlant: false }
+    },
+    updatePlantError(state) {
+        state.status = {};
+    },
+    setPlant(state, plant) {
+        state.currentPlant = plant;
+    },
+    getPlantRequestError(state) {
+        state.currentPlant = null;
+    },
+    createPlantRequest(state) {
+        state.status = { creatingPlant: true }
+    },
+    createPlantSuccess(state, plant) {
+        state.status = { creatingPlant: false }
+        state.plants.push(plant)
+    },
+    createPlantError(state) {
+        state.status = {};
+    },
+    getAllPlantsRequest(state) {
+        state.status = { gettingPlants: true };
+    },
+    getAllPlantsSuccess(state, plants) {
+        state.status = { gettingPlants: false }
+
+        // Setting plants that were loaded from backend
+        state.plants = plants;
+    },
+    getAllPlantsError(state) {
+        state.status = {};
+        state.plants = [];
+    },
+};
+
+
+export const plant = {
+    namespaced: true,
+    state,
+    actions,
+    mutations,
+    getters
+};
+```
+
+## Realizacja interfejsu
 Poniżej przedstawione zostały efekty implementacyjne.
 
 ### Tworzenie plantacji
