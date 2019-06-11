@@ -171,13 +171,11 @@ Analiza rynku jest trudna, ze względu na niewielką konkurencję oraz brak moż
 Potencjalna, znana konkurencja:
 ![](http://www.techbase.eu/templates/beez_20/images/logo-top.png)
 
-# Harmonogram oraz nakład projektowy
+# Harmonogram oraz nakład czasowy
 ## Wykres Gantt'a
 ![](https://github.com/Alegres/ziwp/blob/master/gantt.png?raw=true)
 
-## Kalkulacja kosztów
-
-## Nakład 
+## Nakład czasowy
 Nakład czasowy to około:
 ```
 90 h x 4 osoby= 360h pracy w domu
