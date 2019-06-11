@@ -51,7 +51,7 @@ Każda nowa uprawa wymagać będzie zainstalowania Arduino oraz *modułu Arduino
 
 ## Architektura systemu
 ### Podejście ogólne
-![alt text](https://github.com/Alegres/ziwp/blob/master/architecture.jpg "Architektura systemu")
+![alt text](https://github.com/Alegres/ziwp/blob/master/architecture.jpg?raw=true "Architektura systemu")
 
 ### Model z centralnym serwerem
 Zalety
@@ -63,7 +63,7 @@ Wady
 * zapewnienie zasobów pamięciowych oraz mocy obliczeniowej do obsługi wszystkich upraw leży po stronie centralnej administracji
 * na wypadek awarii jednostki centralnej, wszystkie uprawy przestają działać
 
-![alt text](https://github.com/Alegres/ziwp/blob/master/centralized.jpg "Model zcentralizowany")
+![alt text](https://github.com/Alegres/ziwp/blob/master/centralized.jpg?raw=true "Model zcentralizowany")
 
 ### Model "samowystraczalny"
 Model *samowystarczalny* to pod względem schematu po prostu *Podejście ogólne*, powielone na każdą uprawę. W takim modelu każda uprawa posiada własny serwer, bazę danych oraz interfejs.
