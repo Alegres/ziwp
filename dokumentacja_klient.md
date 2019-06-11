@@ -488,6 +488,9 @@ export const plant = {
 };
 ```
 
+## Obsługa błędów API
+Ewentualne błędy zwracane przez API obsługiwane są przez Vuex-Store oraz wyświetlane przy użyciu biblioteki **iziToast.js**. Wiadomości (na podstawie kodów błędów) zwracane są przy pomocy serwisów wiadomości (np. **PlantMessageService.js**) i definiowane w osobnych plikach językowych **.json**.
+
 ## Realizacja interfejsu
 Poniżej przedstawione zostały efekty implementacyjne.
 
